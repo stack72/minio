@@ -53,6 +53,7 @@ const (
 	globalMinioModeGatewayAzure    = "mode-gateway-azure"
 	globalMinioModeGatewayS3       = "mode-gateway-s3"
 	globalMinioModeGatewayGCS      = "mode-gateway-gcs"
+	globalMinioModeGatewayTriton   = "mode-gateway-triton"
 	// Add new global values here.
 )
 

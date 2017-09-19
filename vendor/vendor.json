@@ -227,9 +227,39 @@
 			"revisionTime": "2016-05-16T23:23:31-07:00"
 		},
 		{
+			"checksumSHA1": "cdOCt0Yb+hdErz8NAQqayxPmRsY=",
+			"path": "github.com/hashicorp/errwrap",
+			"revision": "7554cd9344cec97297fa6649b055a8c98c2a1e55",
+			"revisionTime": "2014-10-28T05:47:10Z"
+		},
+		{
 			"path": "github.com/hashicorp/go-version",
 			"revision": "7e3c02b30806fa5779d3bdfc152ce4c6f40e7b38",
 			"revisionTime": "2016-01-19T13:13:26-08:00"
+		},
+		{
+			"checksumSHA1": "0rEZ1HKhlPYgpoXzeG7mzbqwoBM=",
+			"path": "github.com/joyent/triton-go",
+			"revision": "b37e4764ee209a29835d89c7b9974b880da61a27",
+			"revisionTime": "2017-09-11T20:25:24Z"
+		},
+		{
+			"checksumSHA1": "JKf97EAAAZFQ6Wf8qN9X7TWqNBY=",
+			"path": "github.com/joyent/triton-go/authentication",
+			"revision": "b37e4764ee209a29835d89c7b9974b880da61a27",
+			"revisionTime": "2017-09-11T20:25:24Z"
+		},
+		{
+			"checksumSHA1": "dlO1or0cyVMAmZzyLcBuoy+M0xU=",
+			"path": "github.com/joyent/triton-go/client",
+			"revision": "b37e4764ee209a29835d89c7b9974b880da61a27",
+			"revisionTime": "2017-09-11T20:25:24Z"
+		},
+		{
+			"checksumSHA1": "FKvhgx6TABNFkp8PutfAE2+YToY=",
+			"path": "github.com/joyent/triton-go/storage",
+			"revision": "b37e4764ee209a29835d89c7b9974b880da61a27",
+			"revisionTime": "2017-09-11T20:25:24Z"
 		},
 		{
 			"path": "github.com/klauspost/cpuid",
@@ -457,6 +487,36 @@
 			"path": "go.uber.org/atomic",
 			"revision": "3b8db5e93c4c02efbc313e17b2e796b0914a01fb",
 			"revisionTime": "2016-12-15T19:56:52Z"
+		},
+		{
+			"checksumSHA1": "IQkUIOnvlf0tYloFx9mLaXSvXWQ=",
+			"path": "golang.org/x/crypto/curve25519",
+			"revision": "7d9177d70076375b9a59c8fde23d52d9c4a7ecd5",
+			"revisionTime": "2017-09-15T19:08:28Z"
+		},
+		{
+			"checksumSHA1": "X6Q8nYb+KXh+64AKHwWOOcyijHQ=",
+			"path": "golang.org/x/crypto/ed25519",
+			"revision": "7d9177d70076375b9a59c8fde23d52d9c4a7ecd5",
+			"revisionTime": "2017-09-15T19:08:28Z"
+		},
+		{
+			"checksumSHA1": "LXFcVx8I587SnWmKycSDEq9yvK8=",
+			"path": "golang.org/x/crypto/ed25519/internal/edwards25519",
+			"revision": "7d9177d70076375b9a59c8fde23d52d9c4a7ecd5",
+			"revisionTime": "2017-09-15T19:08:28Z"
+		},
+		{
+			"checksumSHA1": "yPCMw2UX8Jad4GNWSwo8QgZS6TY=",
+			"path": "golang.org/x/crypto/ssh",
+			"revision": "7d9177d70076375b9a59c8fde23d52d9c4a7ecd5",
+			"revisionTime": "2017-09-15T19:08:28Z"
+		},
+		{
+			"checksumSHA1": "ujKeyWHFOYmXm5IgAxfyFCGefsY=",
+			"path": "golang.org/x/crypto/ssh/agent",
+			"revision": "7d9177d70076375b9a59c8fde23d52d9c4a7ecd5",
+			"revisionTime": "2017-09-15T19:08:28Z"
 		},
 		{
 			"path": "golang.org/x/net/context",

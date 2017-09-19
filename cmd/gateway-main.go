@@ -125,6 +125,38 @@ EXAMPLES:
 
 `
 
+const tritonGatewayTemplate = `NAME:
+  {{.HelpName}} - {{.Usage}}
+
+USAGE:
+  {{.HelpName}} {{if .VisibleFlags}}[FLAGS]{{end}} [ENDPOINT]
+{{if .VisibleFlags}}
+FLAGS:
+  {{range .VisibleFlags}}{{.}}
+  {{end}}{{end}}
+ENDPOINT:
+  Triton server endpoint. Default ENDPOINT is https://us-east.manta.joyent.com
+
+ENVIRONMENT VARIABLES:
+  ACCESS:
+     MINIO_ACCESS_KEY: The Triton account name.
+     MINIO_SECRET_KEY: A KeyID associated with the Triton account.
+
+  BROWSER:
+     MINIO_BROWSER: To disable web browser access, set this value to "off".
+
+EXAMPLES:
+  1. Start minio gateway server for Triton Manta Storage backend.
+      $ export MINIO_ACCESS_KEY=triton_account_name
+      $ export MINIO_SECRET_KEY=triton_key_id
+      $ {{.HelpName}}
+
+  2. Start minio gateway server for Triton Manta Storage backend on custom endpoint.
+      $ export MINIO_ACCESS_KEY=triton_account_name
+      $ export MINIO_SECRET_KEY=triton_key_id
+      $ {{.HelpName}} https://us-west.manta.joyent.com
+`
+
 var (
 	azureBackendCmd = cli.Command{
 		Name:               "azure",
@@ -152,12 +184,21 @@ var (
 		HideHelpCommand:    true,
 	}
 
+	tritonBackendCmd = cli.Command{
+		Name:               "triton",
+		Usage:              "Triton.",
+		Action:             tritonGatewayMain,
+		CustomHelpTemplate: tritonGatewayTemplate,
+		Flags:              append(serverFlags, globalFlags...),
+		HideHelpCommand:    true,
+	}
+
 	gatewayCmd = cli.Command{
 		Name:            "gateway",
 		Usage:           "Start object storage gateway.",
 		Flags:           append(serverFlags, globalFlags...),
 		HideHelpCommand: true,
-		Subcommands:     []cli.Command{azureBackendCmd, s3BackendCmd, gcsBackendCmd},
+		Subcommands:     []cli.Command{azureBackendCmd, s3BackendCmd, gcsBackendCmd, tritonBackendCmd},
 	}
 )
 
@@ -165,9 +206,10 @@ var (
 type gatewayBackend string
 
 const (
-	azureBackend gatewayBackend = "azure"
-	s3Backend    gatewayBackend = "s3"
-	gcsBackend   gatewayBackend = "gcs"
+	azureBackend  gatewayBackend = "azure"
+	s3Backend     gatewayBackend = "s3"
+	gcsBackend    gatewayBackend = "gcs"
+	tritonBackend gatewayBackend = "triton"
 	// Add more backends here.
 )
 
@@ -189,6 +231,11 @@ func newGatewayLayer(backendType gatewayBackend, arg string) (GatewayLayer, erro
 		// will be removed when gcs is ready for production use.
 		log.Println(colorYellow("\n               *** Warning: Not Ready for Production ***"))
 		return newGCSGateway(arg)
+	case tritonBackend:
+		// FIXME: The following print command is temporary and
+		// will be removed when gcs is ready for production use.
+		log.Println(colorYellow("\n               *** Warning: Not Ready for Production ***"))
+		return newTritonGateway(arg)
 	}
 
 	return nil, fmt.Errorf("Unrecognized backend type %s", backendType)
@@ -283,6 +330,18 @@ func gcsGatewayMain(ctx *cli.Context) {
 	}
 
 	gatewayMain(ctx, gcsBackend)
+}
+
+// Handler for 'minio gateway triton' command line.
+func tritonGatewayMain(ctx *cli.Context) {
+	if ctx.Args().Present() && ctx.Args().First() == "help" {
+		cli.ShowCommandHelpAndExit(ctx, "triton", 1)
+	}
+
+	// Validate gateway arguments.
+	fatalIf(validateGatewayArguments(ctx.GlobalString("address"), ctx.Args().First()), "Invalid argument")
+
+	gatewayMain(ctx, tritonBackend)
 }
 
 // Handler for 'minio gateway'.
@@ -393,6 +452,8 @@ func gatewayMain(ctx *cli.Context, backendType gatewayBackend) {
 			mode = globalMinioModeGatewayGCS
 		case s3Backend:
 			mode = globalMinioModeGatewayS3
+		case tritonBackend:
+			mode = globalMinioModeGatewayTriton
 		}
 
 		// Check update mode.
